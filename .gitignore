@@ -1,0 +1,20 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.nupkg
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Logs
+*.log
+
+# OS Files
+Thumbs.db
+.DS_Store
