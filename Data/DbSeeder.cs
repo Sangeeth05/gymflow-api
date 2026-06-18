@@ -90,15 +90,82 @@ public static class DbSeeder
         };
         db.Products.AddRange(products);
 
+        //// ── Promo Codes ───────────────────────────────────────────────────────
         // ── Promo Codes ───────────────────────────────────────────────────────
         var promos = new List<PromoCode>
         {
-            new() { Code = "WELCOME50", Description = "Welcome offer for new members", DiscountType = DiscountType.Percentage, DiscountValue = 50, MinPurchase = 999, MaxUses = 100, UsedCount = 67, ValidFrom = new DateTime(2024, 1, 1), ValidTo = new DateTime(2024, 12, 31), ApplicableFor = PromoApplicableFor.NewMembers, GymId = gym.Id },
-            new() { Code = "RENEW20", Description = "20% off on plan renewals", DiscountType = DiscountType.Percentage, DiscountValue = 20, MinPurchase = 0, MaxUses = 200, UsedCount = 134, ValidFrom = new DateTime(2024, 3, 1), ValidTo = new DateTime(2024, 5, 31), ApplicableFor = PromoApplicableFor.RenewalOnly, GymId = gym.Id },
-            new() { Code = "FLAT500", Description = "Flat ₹500 off on premium plans", DiscountType = DiscountType.FixedAmount, DiscountValue = 500, MinPurchase = 1999, MaxUses = 50, UsedCount = 50, ValidFrom = new DateTime(2024, 2, 1), ValidTo = new DateTime(2024, 3, 31), ApplicableFor = PromoApplicableFor.All, GymId = gym.Id },
-            new() { Code = "SUMMER30", Description = "Summer sale — 30% off everything", DiscountType = DiscountType.Percentage, DiscountValue = 30, MinPurchase = 0, MaxUses = 150, UsedCount = 0, ValidFrom = new DateTime(2025, 6, 1), ValidTo = new DateTime(2025, 8, 31), ApplicableFor = PromoApplicableFor.All, GymId = gym.Id },
+            new()
+            {
+                Code = "WELCOME50",
+                Description = "Welcome offer for new members",
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 50,
+                MinPurchase = 999,
+                MaxUses = 100,
+                UsedCount = 67,
+                ValidFrom = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                ValidTo = new DateTime(2024, 12, 31, 0, 0, 0, DateTimeKind.Utc),
+                ApplicableFor = PromoApplicableFor.NewMembers,
+                GymId = gym.Id
+            },
+
+            new()
+            {
+                Code = "RENEW20",
+                Description = "20% off on plan renewals",
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 20,
+                MinPurchase = 0,
+                MaxUses = 200,
+                UsedCount = 134,
+                ValidFrom = new DateTime(2024, 3, 1, 0, 0, 0, DateTimeKind.Utc),
+                ValidTo = new DateTime(2024, 5, 31, 0, 0, 0, DateTimeKind.Utc),
+                ApplicableFor = PromoApplicableFor.RenewalOnly,
+                GymId = gym.Id
+            },
+
+            new()
+            {
+                Code = "FLAT500",
+                Description = "Flat ₹500 off on premium plans",
+                DiscountType = DiscountType.FixedAmount,
+                DiscountValue = 500,
+                MinPurchase = 1999,
+                MaxUses = 50,
+                UsedCount = 50,
+                ValidFrom = new DateTime(2024, 2, 1, 0, 0, 0, DateTimeKind.Utc),
+                ValidTo = new DateTime(2024, 3, 31, 0, 0, 0, DateTimeKind.Utc),
+                ApplicableFor = PromoApplicableFor.All,
+                GymId = gym.Id
+            },
+
+            new()
+            {
+                Code = "SUMMER30",
+                Description = "Summer sale — 30% off everything",
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 30,
+                MinPurchase = 0,
+                MaxUses = 150,
+                UsedCount = 0,
+                ValidFrom = new DateTime(2025, 6, 1, 0, 0, 0, DateTimeKind.Utc),
+                ValidTo = new DateTime(2025, 8, 31, 0, 0, 0, DateTimeKind.Utc),
+                ApplicableFor = PromoApplicableFor.All,
+                GymId = gym.Id
+            }
         };
-        db.PromoCodes.AddRange(promos);
+
+                db.PromoCodes.AddRange(promos);
+
+
+        //var promos = new List<PromoCode>
+        //{
+        //    new() { Code = "WELCOME50", Description = "Welcome offer for new members", DiscountType = DiscountType.Percentage, DiscountValue = 50, MinPurchase = 999, MaxUses = 100, UsedCount = 67, ValidFrom = new DateTime(2024, 1, 1), ValidTo = new DateTime(2024, 12, 31), ApplicableFor = PromoApplicableFor.NewMembers, GymId = gym.Id },
+        //    new() { Code = "RENEW20", Description = "20% off on plan renewals", DiscountType = DiscountType.Percentage, DiscountValue = 20, MinPurchase = 0, MaxUses = 200, UsedCount = 134, ValidFrom = new DateTime(2024, 3, 1), ValidTo = new DateTime(2024, 5, 31), ApplicableFor = PromoApplicableFor.RenewalOnly, GymId = gym.Id },
+        //    new() { Code = "FLAT500", Description = "Flat ₹500 off on premium plans", DiscountType = DiscountType.FixedAmount, DiscountValue = 500, MinPurchase = 1999, MaxUses = 50, UsedCount = 50, ValidFrom = new DateTime(2024, 2, 1), ValidTo = new DateTime(2024, 3, 31), ApplicableFor = PromoApplicableFor.All, GymId = gym.Id },
+        //    new() { Code = "SUMMER30", Description = "Summer sale — 30% off everything", DiscountType = DiscountType.Percentage, DiscountValue = 30, MinPurchase = 0, MaxUses = 150, UsedCount = 0, ValidFrom = new DateTime(2025, 6, 1), ValidTo = new DateTime(2025, 8, 31), ApplicableFor = PromoApplicableFor.All, GymId = gym.Id },
+        //};
+        //db.PromoCodes.AddRange(promos);
 
         // ── Staff ─────────────────────────────────────────────────────────────
         var staff = new List<Staff>

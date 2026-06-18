@@ -237,8 +237,20 @@ public class DashboardService : IDashboardService
 
     public async Task<DashboardStatsDto> GetStatsAsync(Guid gymId)
     {
+        //var now = DateTime.UtcNow;
+        //var monthStart = new DateTime(now.Year, now.Month, 1);
+        //var lastMonthStart = monthStart.AddMonths(-1);
         var now = DateTime.UtcNow;
-        var monthStart = new DateTime(now.Year, now.Month, 1);
+
+        var monthStart = new DateTime(
+            now.Year,
+            now.Month,
+            1,
+            0,
+            0,
+            0,
+            DateTimeKind.Utc);
+
         var lastMonthStart = monthStart.AddMonths(-1);
         var today = DateOnly.FromDateTime(now);
         var soon = DateOnly.FromDateTime(now.AddDays(7));

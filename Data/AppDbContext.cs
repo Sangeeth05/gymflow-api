@@ -25,49 +25,68 @@ public class AppDbContext : DbContext
 
         // AdminUser
         modelBuilder.Entity<AdminUser>()
-            .HasIndex(u => u.Email).IsUnique();
+            .HasIndex(u => u.Email)
+            .IsUnique();
 
         // Member
         modelBuilder.Entity<Member>()
-            .HasIndex(m => m.MemberId).IsUnique();
+            .HasIndex(m => m.MemberId)
+            .IsUnique();
+
         modelBuilder.Entity<Member>()
-            .HasIndex(m => m.Email).IsUnique();
+            .HasIndex(m => m.Email)
+            .IsUnique();
+
         modelBuilder.Entity<Member>()
             .HasOne(m => m.MembershipPlan)
             .WithMany(p => p.Members)
             .HasForeignKey(m => m.MembershipPlanId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Transaction — decimal precision
+        // Transaction
         modelBuilder.Entity<Transaction>()
-            .Property(t => t.Amount).HasColumnType("decimal(18,2)");
+            .Property(t => t.Amount)
+            .HasPrecision(18, 2);
 
         // Product
         modelBuilder.Entity<Product>()
-            .Property(p => p.Price).HasColumnType("decimal(18,2)");
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<Product>()
-            .Property(p => p.OriginalPrice).HasColumnType("decimal(18,2)");
+            .Property(p => p.OriginalPrice)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Product>()
+            .Property(p => p.Rating)
+            .HasPrecision(18, 2);
 
         // InventoryItem
         modelBuilder.Entity<InventoryItem>()
-            .Property(i => i.PurchasePrice).HasColumnType("decimal(18,2)");
+            .Property(i => i.PurchasePrice)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<InventoryItem>()
-            .Property(i => i.SellingPrice).HasColumnType("decimal(18,2)");
+            .Property(i => i.SellingPrice)
+            .HasPrecision(18, 2);
 
         // MembershipPlan
         modelBuilder.Entity<MembershipPlan>()
-            .Property(p => p.Price).HasColumnType("decimal(18,2)");
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
 
         // Staff
         modelBuilder.Entity<Staff>()
-            .Property(s => s.Salary).HasColumnType("decimal(18,2)");
-            
+            .Property(s => s.Salary)
+            .HasPrecision(18, 2);
+
         // PromoCode
         modelBuilder.Entity<PromoCode>()
-            .Property(p => p.DiscountValue).HasColumnType("decimal(18,2)");
-        modelBuilder.Entity<PromoCode>()
-            .Property(p => p.MinPurchase).HasColumnType("decimal(18,2)");
+            .Property(p => p.DiscountValue)
+            .HasPrecision(18, 2);
 
-        // Global soft-delete query filters could be added here
+        modelBuilder.Entity<PromoCode>()
+            .Property(p => p.MinPurchase)
+            .HasPrecision(18, 2);
     }
 }
