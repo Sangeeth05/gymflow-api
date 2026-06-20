@@ -20,10 +20,19 @@ public class ExceptionMiddleware
         {
             await _next(context);
         }
+        //catch (Exception ex)
+        //{
+        //    _logger.LogError(ex, "Unhandled exception: {Message}", ex.Message);
+        //    await HandleExceptionAsync(context, ex);
+        //}
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception: {Message}", ex.Message);
-            await HandleExceptionAsync(context, ex);
+            await context.Response.WriteAsJsonAsync(new
+            {
+                statusCode = 500,
+                message = ex.Message,
+                detail = ex.ToString()
+            });
         }
     }
 

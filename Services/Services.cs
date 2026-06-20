@@ -307,18 +307,53 @@ public class DashboardService : IDashboardService
         return activities.OrderByDescending(a => a.Time).Take(8).ToList();
     }
 
+    //public async Task<List<RevenueChartItem>> GetRevenueChartAsync(Guid gymId)
+    //{
+    //    var result = new List<RevenueChartItem>();
+    //    for (int i = 5; i >= 0; i--)
+    //    {
+    //        var date = DateTime.UtcNow.AddMonths(-i);
+    //        var start = new DateTime(date.Year, date.Month, 1);
+    //        var end = start.AddMonths(1);
+    //        var rev = await _db.Transactions.Where(t => t.GymId == gymId && t.Status == PaymentStatus.Paid
+    //            && t.PaidAt >= start && t.PaidAt < end).SumAsync(t => t.Amount);
+    //        result.Add(new RevenueChartItem(date.ToString("MMM"), rev, rev * 0.35m)); // mock expenses
+    //    }
+    //    return result;
+    //}
     public async Task<List<RevenueChartItem>> GetRevenueChartAsync(Guid gymId)
     {
         var result = new List<RevenueChartItem>();
+
         for (int i = 5; i >= 0; i--)
         {
             var date = DateTime.UtcNow.AddMonths(-i);
-            var start = new DateTime(date.Year, date.Month, 1);
+
+            var start = new DateTime(
+                date.Year,
+                date.Month,
+                1,
+                0,
+                0,
+                0,
+                DateTimeKind.Utc);
+
             var end = start.AddMonths(1);
-            var rev = await _db.Transactions.Where(t => t.GymId == gymId && t.Status == PaymentStatus.Paid
-                && t.PaidAt >= start && t.PaidAt < end).SumAsync(t => t.Amount);
-            result.Add(new RevenueChartItem(date.ToString("MMM"), rev, rev * 0.35m)); // mock expenses
+
+            var rev = await _db.Transactions
+                .Where(t =>
+                    t.GymId == gymId &&
+                    t.Status == PaymentStatus.Paid &&
+                    t.PaidAt >= start &&
+                    t.PaidAt < end)
+                .SumAsync(t => t.Amount);
+
+            result.Add(new RevenueChartItem(
+                date.ToString("MMM"),   
+                rev,
+                rev * 0.35m));
         }
+
         return result;
     }
 
@@ -376,7 +411,7 @@ public class FinanceService : IFinanceService
     public async Task<object> GetSummaryAsync(Guid gymId)
     {
         var now = DateTime.UtcNow;
-        var monthStart = new DateTime(now.Year, now.Month, 1);
+        var monthStart = new DateTime(now.Year, now.Month, 1, 0,0,0,DateTimeKind.Utc);
         var total = await _db.Transactions.Where(t => t.GymId == gymId && t.Status == PaymentStatus.Paid).SumAsync(t => t.Amount);
         var monthly = await _db.Transactions.Where(t => t.GymId == gymId && t.Status == PaymentStatus.Paid && t.PaidAt >= monthStart).SumAsync(t => t.Amount);
         var pending = await _db.Transactions.Where(t => t.GymId == gymId && t.Status == PaymentStatus.Pending).SumAsync(t => t.Amount);
