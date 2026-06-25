@@ -49,6 +49,15 @@ builder.Services.AddAuthorization();
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
     ?? new[] { "http://localhost:3000" };
 
+Console.WriteLine("===== ALLOWED ORIGINS =====");
+
+foreach (var origin in allowedOrigins)
+{
+    Console.WriteLine(origin);
+}
+
+Console.WriteLine("===========================");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
